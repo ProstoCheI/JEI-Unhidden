@@ -57,9 +57,3 @@ Clone the repository and run:
 
 The compiled jar will be written to
 `build/libs/JEI Unhidden NeoForge v1.0.0 for mc1.21.1.jar`.
-
-## License
-
-JEI Unhidden is licensed under the
-[GNU Lesser General Public License v3.0 only](LICENSE). The license file also
-contains the incorporated GNU General Public License v3.0 terms.
