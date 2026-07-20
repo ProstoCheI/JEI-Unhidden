@@ -1,0 +1,77 @@
+# Gradle
+/.gradle/
+/**/build/
+/repo/
+
+# NeoForge and Minecraft development runs
+/run/
+/runs/
+/run-data/
+/logs/
+/crash-reports/
+/saves/
+/screenshots/
+/mods/
+/resourcepacks/
+/shaderpacks/
+**/src/generated/**/.cache/
+
+# Local dependencies and configuration
+/libs/
+local.properties
+gradle-local.properties
+.env
+.env.*
+!.env.example
+
+# IntelliJ IDEA and Fleet
+/.idea/
+/.fleet/
+/.run/
+*.iws
+*.iml
+*.ipr
+/out/
+
+# Eclipse
+/.apt_generated/
+/.eclipse/
+/.metadata/
+/.settings/
+/.classpath
+/.factorypath
+/.project
+/.springBeans
+/.sts4-cache
+/bin/
+*.launch
+
+# Visual Studio Code
+/.vscode/
+
+# Codex and local agent configuration
+/.agents/
+/.codex/
+
+# Java and JVM diagnostics
+*.class
+hs_err_pid*.log
+replay_pid*.log
+.attach_pid*
+
+# Logs, temporary files, and editor backups
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Operating system metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+.directory
