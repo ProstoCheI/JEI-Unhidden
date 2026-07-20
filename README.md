@@ -8,7 +8,7 @@ default stack of every item in Minecraft's item registry to JEI, including
 items that other mods omit from creative tabs or remove from JEI's item list.
 
 Depending on the installed mod version, this can expose internal, legacy, or
-disabled content such as Refined Radiance and Shadow Steel from Create.
+disabled content.
 
 ## Features
 
