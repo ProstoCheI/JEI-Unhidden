@@ -1,0 +1,10 @@
+{
+  "gui.jei_unhidden.title": "JEI Unhidden - Mod Filters",
+  "gui.jei_unhidden.search": "Search mods",
+  "gui.jei_unhidden.search.hint": "Search by mod name or ID...",
+  "gui.jei_unhidden.save": "Save & Apply",
+  "gui.jei_unhidden.items_count": "%s items",
+  "gui.jei_unhidden.mode.show_unhidden": "Show (Unhidden)",
+  "gui.jei_unhidden.mode.normal": "Show (Normal)",
+  "gui.jei_unhidden.mode.hide_all": "Hide All"
+}

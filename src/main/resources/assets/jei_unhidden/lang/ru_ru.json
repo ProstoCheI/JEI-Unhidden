@@ -1,0 +1,10 @@
+{
+  "gui.jei_unhidden.title": "JEI Unhidden — Фильтр модов",
+  "gui.jei_unhidden.search": "Поиск модов",
+  "gui.jei_unhidden.search.hint": "Поиск по названию или ID...",
+  "gui.jei_unhidden.save": "Сохранить и применить",
+  "gui.jei_unhidden.items_count": "%s предм.",
+  "gui.jei_unhidden.mode.show_unhidden": "Со скрытым",
+  "gui.jei_unhidden.mode.normal": "Стандарт",
+  "gui.jei_unhidden.mode.hide_all": "Скрыть всё"
+}
