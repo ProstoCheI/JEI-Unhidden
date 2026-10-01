@@ -15,7 +15,7 @@ repositories {
 
 def packagedLicenseName = "LICENSE_${mod_id}"
 tasks.named('jar', Jar).configure {
-    archiveFileName = "${mod_name} NeoForge v${mod_version} for mc${minecraft_version}.jar"
+    archiveFileName = "${mod_name} NeoForge v${mod_version} for mc${minecraft_versions_label}.jar"
 
     from('LICENSE') {
         into 'META-INF'
@@ -28,7 +28,7 @@ tasks.register('saveRelease', Copy) {
     description = 'Builds and saves the mod jar for uploading, outside the build directory.'
     dependsOn tasks.named('build')
     from tasks.named('jar', Jar).flatMap { it.archiveFile }
-    into layout.projectDirectory.dir("releases/${minecraft_version}")
+    into layout.projectDirectory.dir("releases/${minecraft_versions_label}")
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
