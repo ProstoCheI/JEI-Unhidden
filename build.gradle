@@ -23,6 +23,14 @@ tasks.named('jar', Jar).configure {
     }
 }
 
+tasks.register('saveRelease', Copy) {
+    group = 'distribution'
+    description = 'Builds and saves the mod jar for uploading, outside the build directory.'
+    dependsOn tasks.named('build')
+    from tasks.named('jar', Jar).flatMap { it.archiveFile }
+    into layout.projectDirectory.dir("releases/${minecraft_version}")
+}
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 neoForge {
@@ -36,6 +44,7 @@ neoForge {
     runs {
         client {
             client()
+            gameDirectory = project.file("run/${minecraft_version}")
         }
     }
 
@@ -61,6 +70,8 @@ def generateModMetadata = tasks.register('generateModMetadata', ProcessResources
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
             neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            jei_version_range      : jei_version_range,
             loader_version_range   : loader_version_range,
             mod_id                 : mod_id,
             mod_name               : mod_name,

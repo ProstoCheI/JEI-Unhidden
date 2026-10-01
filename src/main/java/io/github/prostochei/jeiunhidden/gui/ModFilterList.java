@@ -50,7 +50,7 @@ public class ModFilterList extends ContainerObjectSelectionList<ModFilterList.En
                 this.addEntry(new Entry(this.minecraft, mod, pendingModes));
             }
         }
-        this.setScrollAmount(this.getScrollAmount());
+        this.setScrollAmount(this.scrollAmount());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ModFilterList extends ContainerObjectSelectionList<ModFilterList.En
     }
 
     @Override
-    protected int getScrollbarPosition() {
+    protected int scrollBarX() {
         return this.getRowLeft() + this.getRowWidth() + 6;
     }
 
@@ -97,13 +97,13 @@ public class ModFilterList extends ContainerObjectSelectionList<ModFilterList.En
             Font font = minecraft.font;
 
             Component nameComponent = Component.literal(modData.displayName()).withStyle(ChatFormatting.WHITE);
-            guiGraphics.drawString(font, nameComponent, left + 4, top + 2, 0xFFFFFF);
+            guiGraphics.drawString(font, nameComponent, left + 4, top + 2, 0xFFFFFFFF);
 
             Component infoComponent = Component.literal(modData.modId() + " • ")
                     .withStyle(ChatFormatting.DARK_GRAY)
                     .append(Component.translatable("gui.jei_unhidden.items_count", modData.allItems().size())
                             .withStyle(ChatFormatting.GRAY));
-            guiGraphics.drawString(font, infoComponent, left + 4, top + 13, 0x888888);
+            guiGraphics.drawString(font, infoComponent, left + 4, top + 13, 0xFF888888);
 
             toggleButton.setX(left + width - toggleButton.getWidth() - 4);
             toggleButton.setY(top + 2);

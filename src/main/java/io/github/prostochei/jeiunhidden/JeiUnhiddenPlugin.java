@@ -15,14 +15,14 @@ import mezz.jei.api.ingredients.IIngredientHelper;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.recipe.IRecipeManager;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IExtraIngredientRegistration;
 import mezz.jei.api.runtime.IIngredientFilter;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -52,7 +52,7 @@ public final class JeiUnhiddenPlugin implements IModPlugin {
     private static final AtomicBoolean RESTORATION_SCHEDULED = new AtomicBoolean();
     private static final AtomicBoolean IS_APPLYING_FILTERS = new AtomicBoolean();
     private static final Map<IIngredientType<?>, Map<String, List<Object>>> INITIAL_INGREDIENTS = new ConcurrentHashMap<>();
-    private static final Map<RecipeType<?>, List<Object>> INITIAL_RECIPES = new ConcurrentHashMap<>();
+    private static final Map<IRecipeType<?>, List<Object>> INITIAL_RECIPES = new ConcurrentHashMap<>();
     private static final List<IRecipeCategory<?>> ALL_CATEGORIES = new ArrayList<>();
 
     private static IJeiRuntime jeiRuntime;
@@ -148,7 +148,7 @@ public final class JeiUnhiddenPlugin implements IModPlugin {
 
     @SuppressWarnings("unchecked")
     private static <T> void captureCategoryRecipes(IRecipeManager recipeManager, IRecipeCategory<T> category) {
-        RecipeType<T> type = category.getRecipeType();
+        IRecipeType<T> type = category.getRecipeType();
         List<T> recipes = recipeManager.createRecipeLookup(type)
                 .includeHidden()
                 .get()
@@ -219,12 +219,8 @@ public final class JeiUnhiddenPlugin implements IModPlugin {
             Set<String> hiddenMods,
             Set<Item> hiddenItemTypes
     ) {
-        RegistryAccess registryAccess = Minecraft.getInstance().level != null
-                ? Minecraft.getInstance().level.registryAccess()
-                : RegistryAccess.EMPTY;
-
         for (IRecipeCategory<?> rawCategory : ALL_CATEGORIES) {
-            filterCategoryRecipes(recipeManager, (IRecipeCategory<Object>) rawCategory, hiddenMods, hiddenItemTypes, registryAccess);
+            filterCategoryRecipes(recipeManager, (IRecipeCategory<Object>) rawCategory, hiddenMods, hiddenItemTypes);
         }
     }
 
@@ -232,10 +228,9 @@ public final class JeiUnhiddenPlugin implements IModPlugin {
             IRecipeManager recipeManager,
             IRecipeCategory<T> category,
             Set<String> hiddenMods,
-            Set<Item> hiddenItemTypes,
-            RegistryAccess registryAccess
+            Set<Item> hiddenItemTypes
     ) {
-        RecipeType<T> type = category.getRecipeType();
+        IRecipeType<T> type = category.getRecipeType();
         boolean categoryBelongsToHiddenMod = hiddenMods.contains(type.getUid().getNamespace());
 
         if (categoryBelongsToHiddenMod) {
@@ -258,15 +253,16 @@ public final class JeiUnhiddenPlugin implements IModPlugin {
             ResourceLocation id = category.getRegistryName(recipe);
             if (id != null && hiddenMods.contains(id.getNamespace())) {
                 shouldHide = true;
-            } else if (recipe instanceof RecipeHolder<?> holder) {
+            } else if (recipe instanceof RecipeHolder<?>) {
                 try {
-                    ItemStack result = holder.value().getResultItem(registryAccess);
-                    if (!result.isEmpty()) {
-                        String resultMod = BuiltInRegistries.ITEM.getKey(result.getItem()).getNamespace();
-                        if (hiddenMods.contains(resultMod) || hiddenItemTypes.contains(result.getItem())) {
-                            shouldHide = true;
-                        }
-                    }
+                    // Minecraft no longer exposes Recipe#getResultItem; use JEI's output ingredients.
+                    shouldHide = recipeManager.getRecipeIngredients(category, recipe)
+                            .getIngredients(RecipeIngredientRole.OUTPUT).stream()
+                            .flatMap(ingredient -> ingredient.getItemStack().stream())
+                            .filter(stack -> !stack.isEmpty())
+                            .anyMatch(stack -> hiddenMods.contains(
+                                    BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace()
+                            ) || hiddenItemTypes.contains(stack.getItem()));
                 } catch (Exception ignored) {
                 }
             }

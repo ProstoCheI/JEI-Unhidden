@@ -19,7 +19,7 @@ Shows items that other mods omit from creative tabs or remove from JEI's item li
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"
-versionRange="[${neo_version},21.2)"
+versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 
@@ -33,6 +33,6 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="jei"
 type="required"
-versionRange="[19.27.0.340,20)"
+versionRange="${jei_version_range}"
 ordering="AFTER"
 side="CLIENT"

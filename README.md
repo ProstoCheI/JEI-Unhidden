@@ -17,21 +17,21 @@ disabled content.
 - Restores registered items removed from JEI at runtime.
 - Preserves the variants that JEI already knows about.
 - Respects items manually hidden by the player with JEI's edit mode.
-- Requires no configuration and adds no commands.
+- Provides per-mod visibility settings for items and recipes.
 - Runs entirely on the client and is safe to include in modpacks.
 
 ## Requirements
 
 | Component | Version |
 | --- | --- |
-| Minecraft | 1.21.1 |
-| NeoForge | 21.1.234 or newer 21.1.x |
-| JEI | 19.27.0.340 or newer 19.x |
+| Minecraft | 1.21.8 |
+| NeoForge | 21.8.54 or newer 21.8.x |
+| JEI | 24.2.0.6 or newer 24.x |
 | Java | 21 |
 
 ## Installation
 
-1. Install NeoForge for Minecraft 1.21.1.
+1. Install NeoForge for Minecraft 1.21.8.
 2. Install a compatible version of JEI.
 3. Place the JEI Unhidden jar in the instance's `mods` directory.
 
@@ -39,7 +39,7 @@ The addon does not need to be installed on a dedicated server.
 
 ## What this mod does not do
 
-- It does not add or enable recipes.
+- It does not register new recipes or change crafting behavior.
 - It does not make unobtainable items obtainable in survival mode.
 - It cannot show content that a mod never registered as an item.
 - It does not generate every possible data-component or NBT combination.
@@ -56,4 +56,13 @@ Clone the repository and run:
 ```
 
 The compiled jar will be written to
-`build/libs/JEI Unhidden NeoForge v1.0.0 for mc1.21.1.jar`.
+`build/libs/JEI Unhidden NeoForge v1.0.1 for mc1.21.8.jar`.
+
+To build and preserve a copy for uploading, run:
+
+```powershell
+.\gradlew.bat saveRelease
+```
+
+The copy is saved in `releases/1.21.8/`. The `releases/` directory is ignored
+by Git and persists when switching branches.

@@ -2,6 +2,7 @@
 /.gradle/
 /**/build/
 /repo/
+/releases/
 
 # NeoForge and Minecraft development runs
 /run/
